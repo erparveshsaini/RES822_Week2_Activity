@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Methods Master Quiz</title>
+    <style>
+        /* style.css content starts here */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            background-color: #e0f2f7; /* Light blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .quiz-container {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Soft shadow */
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            border: 1px solid #cce7ee;
+        }
+
+        h1 {
+            color: #2c3e50; /* Darker blue-grey for heading */
+            margin-bottom: 1.5rem;
+            font-size: 2.2em;
+        }
+
+        .question {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #34495e; /* Slightly lighter dark blue-grey */
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .answers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* Space between answer options */
+            margin-bottom: 1.5rem;
+        }
+
+        .answers label {
+            display: flex;
+            align-items: center;
+            background-color: #f8fcfd; /* Very light blue for options */
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid #d0e8f2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1.1em;
+            color: #4a657c;
+        }
+
+        .answers label:hover {
+            background-color: #eaf6fa;
+            border-color: #a7d9eb;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .answers input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2); /* Slightly larger radio buttons */
+        }
+
+        button {
+            background-color: #007bff; /* Primary blue */
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Button shadow */
+            width: auto;
+            min-width: 150px;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+        }
+
+        #results-area {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f0f8ff; /* Lighter blue for results area */
+            border-radius: 10px;
+            border: 1px solid #cce7ee;
+        }
+
+        #results-area h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-bottom: 1rem;
+        }
+
+        #results-area p {
+            font-size: 1.2em;
+            color: #34495e;
+            margin-bottom: 0.8rem;
+        }
+
+        #score-display, #total-questions-display {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        #feedback-message {
+            font-style: italic;
+            color: #555;
+            margin-top: 1.5rem;
+        }
+
+        .correct-answer-feedback {
+            background-color: #d4edda; /* Light green for correct */
+            border-color: #28a745; /* Green border */
+        }
+
+        .incorrect-answer-feedback {
+            background-color: #f8d7da; /* Light red for incorrect */
+            border-color: #dc3545; /* Red border */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 1.5rem;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .question {
+                font-size: 1.1em;
+            }
+
+            .answers label {
+                padding: 12px 15px;
+                font-size: 1em;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+        }
+        /* style.css content ends here */
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Research Methods Master Quiz 🎓</h1>
+        <div id="quiz-area">
+            <div id="question-display" class="question"></div>
+            <div id="answers-display" class="answers"></div>
+            <button id="next-button">Next Question</button>
+        </div>
+        <div id="results-area" style="display:none;">
+            <h2>Quiz Complete!</h2>
+            <p>Your Score: <span id="score-display"></span> / <span id="total-questions-display"></span></p>
+            <p id="feedback-message"></p>
+            <button id="restart-button">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        // script.js content starts here
+        // Array of quiz questions
+        const quizQuestions = [
+            {
+                question: "What is a survey (questionnaire survey) primarily used for?",
+                answers: {
+                    a: "Collecting secondary data",
+                    b: "Collecting primary data",
+                    c: "Qualitative analysis only",
+                    d: "Designing experiments"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "Which research approach is typically associated with survey design?",
+                answers: {
+                    a: "Grounded theory",
+                    b: "Ethnography",
+                    c: "Deductive research approach",
+                    d: "Inductive reasoning"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "What is the term used to indicate a questionnaire?",
+                answers: {
+                    a: "Metric",
+                    b: "Instrument",
+                    c: "Indicator",
+                    d: "Variable"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "According to the provided material, which of these is NOT one of the three main types of surveys?",
+                answers: {
+                    a: "Factual surveys",
+                    b: "Inferential surveys",
+                    c: "Exploratory surveys",
+                    d: "Descriptive surveys"
+                },
+                correctAnswer: "d"
+            },
+            {
+                question: "Which of the following is a key factor to consider when choosing a questionnaire mode?",
+                answers: {
+                    a: "The researcher's personal preference",
+                    b: "The time of day the survey is administered",
+                    c: "Characteristics of the respondents",
+                    d: "The length of the researcher's commute"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "The ability of a questionnaire to measure what the researcher intends to measure is known as what?",
+                answers: {
+                    a: "Reliability",
+                    b: "Validity",
+                    c: "Internal consistency",
+                    d: "Uninformed response"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "Which type of question allows respondents to place things in a specific order of importance?",
+                answers: {
+                    a: "Rating question",
+                    b: "Category question",
+                    c: "Ranking question",
+                    d: "List question"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "A question that includes the phrase 'Do you subscribe to or read magazine or periodicals related to your profession?' is problematic because it:",
+                answers: {
+                    a: "Uses jargon",
+                    b: "Is a leading question",
+                    c: "Expresses more than one idea",
+                    d: "Contains a negative"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "What is the term for a respondent's tendency to deliberately guess an answer due to insufficient knowledge?",
+                answers: {
+                    a: "Socially desirable response",
+                    b: "Acquiescence bias",
+                    c: "Uninformed response",
+                    d: "Non-response bias"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "Which method for assessing reliability involves correlating data from the same questionnaire and respondents at two different times?",
+                answers: {
+                    a: "Internal consistency",
+                    b: "Test re-test",
+                    c: "Alternative form",
+                    d: "Cronbach's alpha"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "What is a recommended strategy for improving a survey's response rate?",
+                answers: {
+                    a: "Making the survey as long as possible",
+                    b: "Obtaining sponsorship from a legitimate authority",
+                    c: "Asking for sensitive information at the beginning of the survey",
+                    d: "Using complicated, jargon-filled language"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "When designing a survey, where should sensitive or objectionable questions be placed?",
+                answers: {
+                    a: "At the beginning, to get them out of the way",
+                    b: "In the middle, to blend them in",
+                    c: "Randomly throughout the survey",
+                    d: "Near the end of the survey"
+                },
+                correctAnswer: "d"
+            },
+            {
+                question: "Which type of measurement scale has a natural ordering but no true zero point?",
+                answers: {
+                    a: "Ratio scale",
+                    b: "Nominal scale",
+                    c: "Ordinal scale",
+                    d: "Interval scale"
+                },
+                correctAnswer: "d" // Corrected from 'c' to 'd' based on the PDF's definition of Interval scale. Ordinal has natural ordering but doesn't quantify differences.
+            },
+            {
+                question: "Temperature measured in Celsius is an example of which type of continuous scale?",
+                answers: {
+                    a: "Ratio scale",
+                    b: "Interval scale",
+                    c: "Ordinal scale",
+                    d: "Nominal scale"
+                },
+                correctAnswer: "b"
+            },
+            {
+                question: "What is a dichotomous scale used for?",
+                answers: {
+                    a: "Measuring attitudes on a five-point scale",
+                    b: "Placing items in rank order",
+                    c: "Dividing data into two specific categories",
+                    d: "Asking multiple similar questions at once"
+                },
+                correctAnswer: "c"
+            },
+            {
+                question: "A rating scale where '1' equals 'strongly disagree' and '7' equals 'strongly agree' is a type of what?",
+                answers: {
+                    a: "Continuous scale",
+                    b: "Dichotomous scale",
+                    c: "Likert scale",
+                    d: "Nominal scale"
+                },
+                correctAnswer: "c"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionDisplay = document.getElementById('question-display');
+        const answersDisplay = document.getElementById('answers-display');
+        const nextButton = document.getElementById('next-button');
+        const quizArea = document.getElementById('quiz-area');
+        const resultsArea = document.getElementById('results-area');
+        const scoreDisplay = document.getElementById('score-display');
+        const totalQuestionsDisplay = document.getElementById('total-questions-display');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const restartButton = document.getElementById('restart-button');
+
+        // Function to display a question
+        function showQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+            questionDisplay.textContent = q.question;
+            answersDisplay.innerHTML = ''; // Clear previous answers
+
+            for (const letter in q.answers) {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question${currentQuestionIndex}`;
+                input.value = letter;
+                label.appendChild(input);
+                label.append(` ${letter.toUpperCase()}: ${q.answers[letter]}`);
+                answersDisplay.appendChild(label);
+            }
+            // Enable the next button after displaying the question
+            nextButton.disabled = false;
+            nextButton.textContent = "Next Question";
+        }
+
+        // Function to check the selected answer
+        function checkAnswer() {
+            const selectedAnswer = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+
+            if (selectedAnswer) {
+                const userAnswer = selectedAnswer.value;
+                const correctAnswer = quizQuestions[currentQuestionIndex].correctAnswer;
+
+                // Provide visual feedback on the selected answer
+                const allLabels = answersDisplay.querySelectorAll('label');
+                allLabels.forEach(label => {
+                    const radio = label.querySelector('input');
+                    if (radio.value === correctAnswer) {
+                        label.classList.add('correct-answer-feedback');
+                    } else if (radio.checked && radio.value !== correctAnswer) {
+                        label.classList.add('incorrect-answer-feedback');
+                    }
+                    radio.disabled = true; // Disable all radio buttons after selection
+                });
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                }
+                nextButton.textContent = "Continue"; // Change button text to indicate progression
+            } else {
+                // If no answer is selected, show a message (optional: could use a modal)
+                alert("Please select an answer before proceeding!");
+                nextButton.disabled = false; // Ensure button is re-enabled if alert is closed
+                return false; // Prevent moving to next question
+            }
+            return true; // Allow moving to next question
+        }
+
+        // Function to handle moving to the next question or showing results
+        function handleNextQuestion() {
+            // First, check the answer for the current question
+            const answerChecked = checkAnswer();
+
+            // If an answer was selected, proceed
+            if (answerChecked) {
+                // Remove feedback classes before moving to the next question
+                const allLabels = answersDisplay.querySelectorAll('label');
+                allLabels.forEach(label => {
+                    label.classList.remove('correct-answer-feedback', 'incorrect-answer-feedback');
+                });
+
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizQuestions.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }
+        }
+
+        // Function to display final results
+        function showResults() {
+            quizArea.style.display = 'none';
+            resultsArea.style.display = 'block';
+            scoreDisplay.textContent = score;
+            totalQuestionsDisplay.textContent = quizQuestions.length;
+
+            let message = "";
+            const percentage = (score / quizQuestions.length) * 100;
+
+            if (percentage === 100) {
+                message = "Excellent! You are a Research Methods Master! 🏆";
+            } else if (percentage >= 75) {
+                message = "Great job! You have a strong understanding of the material. 🎉";
+            } else if (percentage >= 50) {
+                message = "Good effort! Keep reviewing the concepts. 👍";
+            } else {
+                message = "You might want to review the Week 2 materials again. 🤔";
+            }
+            feedbackMessage.textContent = message;
+        }
+
+        // Function to restart the quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsArea.style.display = 'none';
+            quizArea.style.display = 'block';
+            showQuestion();
+        }
+
+        // Event Listeners
+        nextButton.addEventListener('click', handleNextQuestion);
+        restartButton.addEventListener('click', restartQuiz);
+
+        // Initialize the quiz when the page loads
+        document.addEventListener('DOMContentLoaded', showQuestion);
+        // script.js content ends here
+    </script>
+</body>
+</html>
