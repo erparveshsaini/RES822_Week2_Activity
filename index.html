@@ -144,6 +144,41 @@
             border-color: #dc3545;
         }
 
+        .summary-list {
+            margin-top: 2rem;
+            text-align: left;
+            border-top: 1px solid #cce7ee;
+            padding-top: 1.5rem;
+        }
+
+        .summary-item {
+            margin-bottom: 1rem;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+        }
+
+        .summary-item strong {
+            color: #2c3e50;
+        }
+
+        .summary-item .correct-answer-text {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .summary-item .your-answer-text {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .summary-item .your-answer-correct {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+
         /* Responsive adjustments */
         @media (max-width: 600px) {
             .quiz-container {
@@ -183,6 +218,7 @@
             <h2>Quiz Complete!</h2>
             <p>Your Score: <span id="score-display"></span> / <span id="total-questions-display"></span></p>
             <p id="feedback-message"></p>
+            <div id="summary-feedback" class="summary-list"></div>
             <button id="restart-button">Restart Quiz</button>
         </div>
     </div>
@@ -193,109 +229,149 @@
             {
                 question: "What is a survey (questionnaire survey) primarily used for?",
                 answers: { a: "Collecting secondary data", b: "Collecting primary data", c: "Qualitative analysis only", d: "Designing experiments" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null, // New property to store user's choice
+                isCorrect: null // New property to store if user's choice was correct
             },
             {
                 question: "Which research approach is typically associated with survey design?",
                 answers: { a: "Grounded theory", b: "Ethnography", c: "Deductive research approach", d: "Inductive reasoning" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "What is the term used to indicate a questionnaire?",
                 answers: { a: "Metric", b: "Instrument", c: "Indicator", d: "Variable" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "According to the provided material, which of these is NOT one of the three main types of surveys?",
                 answers: { a: "Factual surveys", b: "Inferential surveys", c: "Exploratory surveys", d: "Descriptive surveys" },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "Which of the following is a key factor to consider when choosing a questionnaire mode?",
                 answers: { a: "The researcher's personal preference", b: "The time of day the survey is administered", c: "Characteristics of the respondents", d: "The length of the researcher's commute" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "The ability of a questionnaire to measure what the researcher intends to measure is known as what?",
                 answers: { a: "Reliability", b: "Validity", c: "Internal consistency", d: "Uninformed response" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "Which type of question allows respondents to place things in a specific order of importance?",
                 answers: { a: "Rating question", b: "Category question", c: "Ranking question", d: "List question" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "A question that includes the phrase 'Do you subscribe to or read magazine or periodicals related to your profession?' is problematic because it:",
                 answers: { a: "Uses jargon", b: "Is a leading question", c: "Expresses more than one idea", d: "Contains a negative" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "What is the term for a respondent's tendency to deliberately guess an answer due to insufficient knowledge?",
                 answers: { a: "Socially desirable response", b: "Acquiescence bias", c: "Uninformed response", d: "Non-response bias" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "Which method for assessing reliability involves correlating data from the same questionnaire and respondents at two different times?",
                 answers: { a: "Internal consistency", b: "Test re-test", c: "Alternative form", d: "Cronbach's alpha" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "What is a recommended strategy for improving a survey's response rate?",
                 answers: { a: "Making the survey as long as possible", b: "Obtaining sponsorship from a legitimate authority", c: "Asking for sensitive information at the beginning of the survey", d: "Using complicated, jargon-filled language" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "When designing a survey, where should sensitive or objectionable questions be placed?",
                 answers: { a: "At the beginning, to get them out of the way", b: "In the middle, to blend them in", c: "Randomly throughout the survey", d: "Near the end of the survey" },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "Which type of measurement scale has a natural ordering but no true zero point?",
                 answers: { a: "Ratio scale", b: "Nominal scale", c: "Ordinal scale", d: "Interval scale" },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "Temperature measured in Celsius is an example of which type of continuous scale?",
                 answers: { a: "Ratio scale", b: "Interval scale", c: "Ordinal scale", d: "Nominal scale" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "What is a dichotomous scale used for?",
                 answers: { a: "Measuring attitudes on a five-point scale", b: "Placing items in rank order", c: "Dividing data into two specific categories", d: "Asking multiple similar questions at once" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "A rating scale where '1' equals 'strongly disagree' and '7' equals 'strongly agree' is a type of what?",
                 answers: { a: "Continuous scale", b: "Dichotomous scale", c: "Likert scale", d: "Nominal scale" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             // Scenario-based questions start here
             {
                 question: "A researcher wants to understand if there is a relationship between employee salary, leadership, and motivation at a company. Which type of survey design is most appropriate for this goal?",
                 answers: { a: "Factual survey", b: "Exploratory survey", c: "Descriptive survey", d: "Inferential survey" },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "A researcher is designing a self-completed questionnaire for a large, diverse sample of respondents where many may have limited internet access. To ensure a good response rate, what mode of administration would be most suitable?",
                 answers: { a: "Online (web) questionnaire", b: "Telephone questionnaire", c: "Postal (mail) questionnaire", d: "Face-to-face questionnaire" },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "You are designing a survey and write the question: 'Do you agree that our company's new policies are both fair and effective?' What is the primary problem with this question?",
                 answers: { a: "It uses a negative phrase", b: "It is a double-barreled question", c: "It is a leading question", d: "It is ambiguous" },
-                correctAnswer: "b"
+                correctAnswer: "b",
+                userSelectedAnswer: null,
+                isCorrect: null
             },
             {
                 question: "To measure customer satisfaction, a researcher asks participants to rate their experience on a scale of 1 to 10, where 1 is 'very dissatisfied' and 10 is 'very satisfied'. This is an example of which type of question?",
                 answers: { a: "Ranking question", b: "Category question", c: "Matrix question", d: "Rating question" },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                userSelectedAnswer: null,
+                isCorrect: null
             }
         ];
 
         let currentQuestionIndex = 0;
         let score = 0;
-        let answerSubmitted = false;
+        let answerSubmitted = false; // Flag to prevent multiple selections per question
 
         const questionDisplay = document.getElementById('question-display');
         const answersDisplay = document.getElementById('answers-display');
@@ -305,6 +381,7 @@
         const scoreDisplay = document.getElementById('score-display');
         const totalQuestionsDisplay = document.getElementById('total-questions-display');
         const feedbackMessage = document.getElementById('feedback-message');
+        const summaryFeedback = document.getElementById('summary-feedback'); // New element for summary list
         const restartButton = document.getElementById('restart-button');
 
         // Function to display a question
@@ -334,13 +411,18 @@
             }
         }
 
-        // Function to check the selected answer and provide instant feedback
+        // Function to check the selected answer and provide instant visual feedback
         function checkAnswer(event) {
             if (answerSubmitted) return; // Prevent multiple submissions for the same question
 
             const selectedAnswer = event.target.value;
-            const correctAnswer = quizQuestions[currentQuestionIndex].correctAnswer;
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+            const correctAnswer = currentQuestion.correctAnswer;
             answerSubmitted = true; // Mark that an answer has been submitted for this question
+
+            // Store user's answer and correctness for summary
+            currentQuestion.userSelectedAnswer = selectedAnswer;
+            currentQuestion.isCorrect = (selectedAnswer === correctAnswer);
 
             const allLabels = answersDisplay.querySelectorAll('label');
             allLabels.forEach(label => {
@@ -377,7 +459,7 @@
             showQuestion(); // Display the next question
         }
 
-        // Function to display the final quiz results
+        // Function to display the final quiz results and detailed summary
         function showResults() {
             quizArea.style.display = 'none'; // Hide quiz questions
             resultsArea.style.display = 'block'; // Show results area
@@ -398,13 +480,45 @@
                 message = "You might want to review the Week 2 materials again. 🤔";
             }
             feedbackMessage.textContent = message;
+
+            // Build and display the detailed summary list
+            summaryFeedback.innerHTML = '<h3>Detailed Results:</h3>';
+            quizQuestions.forEach((q, index) => {
+                const summaryItem = document.createElement('div');
+                summaryItem.classList.add('summary-item');
+
+                const questionText = document.createElement('p');
+                questionText.innerHTML = `<strong>Question ${index + 1}:</strong> ${q.question}`;
+                summaryItem.appendChild(questionText);
+
+                const correctAnswerText = document.createElement('p');
+                correctAnswerText.innerHTML = `<strong>Correct Answer:</strong> <span class="correct-answer-text">${q.answers[q.correctAnswer]}</span>`;
+                summaryItem.appendChild(correctAnswerText);
+
+                const yourAnswerText = document.createElement('p');
+                if (q.userSelectedAnswer) {
+                    const yourAnswerClass = q.isCorrect ? 'your-answer-correct' : 'your-answer-text';
+                    yourAnswerText.innerHTML = `<strong>Your Answer:</strong> <span class="${yourAnswerClass}">${q.answers[q.userSelectedAnswer]}</span>`;
+                } else {
+                    yourAnswerText.innerHTML = `<strong>Your Answer:</strong> <span class="your-answer-text">Not answered</span>`;
+                }
+                summaryItem.appendChild(yourAnswerText);
+
+                summaryFeedback.appendChild(summaryItem);
+            });
         }
 
         // Function to restart the quiz
         function restartQuiz() {
             currentQuestionIndex = 0; // Reset question index
             score = 0; // Reset score
+            // Clear stored user answers and correctness for a fresh start
+            quizQuestions.forEach(q => {
+                q.userSelectedAnswer = null;
+                q.isCorrect = null;
+            });
             resultsArea.style.display = 'none'; // Hide results
+            summaryFeedback.innerHTML = ''; // Clear summary list
             quizArea.style.display = 'block'; // Show quiz questions
             showQuestion(); // Start quiz from the beginning
         }
